@@ -1,0 +1,84 @@
+.add-product-section {
+  width: 70em;
+  height: 40rem;
+  position: relative;
+  top: 2rem;
+  left: 5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.Add-post-Header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: bolder;
+  font-family: monospace;
+}
+.product-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.3rem;
+  flex-wrap: wrap;
+  max-height: 22rem;
+}
+.data-input {
+  width: 30rem;
+  height: 4rem;
+  border-radius: 2rem;
+  text-align: center;
+  color: rgb(146, 143, 143);
+  font-size: 25px;
+  font-weight: bold;
+}
+.data-input:focus {
+  color: black;
+}
+.product-images {
+  position: absolute;
+  bottom: 4%;
+  right: 5%;
+  width: 30rem;
+  height: 15rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  padding-top: 1rem;
+  gap: 1rem;
+}
+.image {
+  position: relative;
+  width: 30rem;
+  height: 2.7rem;
+  border-bottom: 2px solid black;
+  font-size: 20px;
+}
+#I2 {
+  width: 30rem;
+  height: 15rem;
+}
+.add-product-btn {
+  position: absolute;
+  bottom: 0;
+  width: 10rem;
+  height: 3rem;
+  background-color: white;
+  color: black;
+  font-size: 18px;
+  border-radius: 30px;
+}
+.remove-image {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: -10px;
+  width: 3rem;
+  height: 2.9rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
