@@ -1,0 +1,55 @@
+.login-form-holder {
+  position: relative;
+  left: 45rem;
+  top: 12rem;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 3rem;
+  border: 2px black solid;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4rem;
+  padding-top: 7rem;
+}
+.email-input {
+  width: 90%;
+  height: 3rem;
+  color: grey;
+  border: none;
+  font-size: 20px;
+  border-bottom: 2px solid grey;
+}
+.email-input:focus-within {
+  color: black;
+}
+.password-input {
+  width: 90%;
+  height: 3rem;
+  color: grey;
+  border: none;
+  font-size: 20px;
+  border-bottom: 2px solid grey;
+}
+.password-input:focus-within {
+  color: black;
+}
+.login-btn {
+  width: 30%;
+  height: 3rem;
+  border: none;
+  color: black;
+  font-size: 20px;
+  background-color: rgba(173, 171, 171, 0.692);
+  border-radius: 0.5rem;
+}
+.login-btn:hover {
+  transition: 0.5s ease-in-out;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}

@@ -5,12 +5,21 @@ import routes from "./routes/routes";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import AddBlog from "./Pages/AddBlog";
+import Login from "./Pages/Login";
+import RouteGuard from "./Auth/RouteGuard";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<AddProduct />} />
-      <Route path="/AddBlog" element={<AddBlog />} />
+      {routes.map((route) => (
+        <Route
+          key={route.path}
+          path={route.path}
+          element={<RouteGuard>{route.element}</RouteGuard>}
+        />
+      ))}
+      <Route exact path="/" element={<Login />} />
+      <Route exact path="/Login" element={<Login />} />
     </Routes>
   );
 }
