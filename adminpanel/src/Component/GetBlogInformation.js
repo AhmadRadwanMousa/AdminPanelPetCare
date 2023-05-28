@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../ComponentStyle/GetBlogInformaiton.css";
 import { useEffect } from "react";
+import NoData from "../SharedComponent/NoData";
 
 export default function GetBlogInformation() {
   const [blogdata, setblogdata] = useState([]);
@@ -44,11 +45,15 @@ export default function GetBlogInformation() {
   return (
     <div className="blogs-table">
       <div className="blog-table-header">GetBlog Information</div>
-      <div className="blog-data-header">
-        <div>AnimalType</div>
-        <div>AnimalBreed</div>
-        <div>Remove</div>
-      </div>
+      {blogdata.length === 0 ? (
+        <NoData />
+      ) : (
+        <div className="blog-data-header">
+          <div>AnimalType</div>
+          <div>AnimalBreed</div>
+          <div>Remove</div>
+        </div>
+      )}
       {blogdata.map((data, index) => (
         <div className="blog-data" key={index}>
           <div className="animal-type">{data.animalType}</div>

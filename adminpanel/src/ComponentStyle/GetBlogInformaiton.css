@@ -1,53 +1,58 @@
 .blogs-table {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+  padding-top: 2rem;
 }
 .blog-table-header {
   position: relative;
-  left: 44%;
-  width: 16rem;
+  left: 50%;
+  transform: translate(-40%);
+  width: 20rem;
   height: 4rem;
   color: white;
   font-size: 30px;
+  font-weight: bold;
 }
 .blog-data-header {
   width: 100%;
   height: 3rem;
   background-color: #ea738d;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   color: black;
   font-size: 24px;
-  border-radius: 0.5rem;
 }
 .blog-data {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 3rem;
   background-color: white;
   color: black;
-  font-size: 20px;
-  border-radius: 0.5rem;
+  font-size: 25px;
+
   border-bottom: 2px solid #ea738d;
 }
 .delete-blog {
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
   background-size: contain;
   background-image: url("../Image/deleteLogoTest.png");
+  cursor: pointer;
 }
 .animal-type {
-  max-width: 2rem;
-  max-height: 3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .animal-breed {
-  max-width: 4rem;
-}
-.delete-blog {
-  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

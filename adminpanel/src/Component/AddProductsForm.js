@@ -1,15 +1,33 @@
 import React, { useState } from "react";
 import "../ComponentStyle/AddProductForm.css";
+import { FileUploader } from "react-drag-drop-files";
 export default function AddProductsForm() {
+  const [image, setImage] = useState([]);
+  const [imageName, setImageName] = useState([]);
   const [ProductInfo, setProductInfo] = useState([
     {
       AnimalType: "",
       ProductName: "",
       ProductPrice: "",
       ProductType: "",
-      Images: "",
+      Images: [],
     },
   ]);
+  const handleProductSubmit = async (event) => {
+    await UploadData();
+  };
+  const UploadData = async () => {
+    const response = await fetch("http://localhost:4111/admin/getProductData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ProductData: ProductInfo }),
+    });
+    console.log(ProductInfo);
+    const data = await response.json();
+    console.log(data.message);
+  };
   const handleAnimalType = (event) => {
     setProductInfo({ ...ProductInfo, AnimalType: event.target.value });
   };
@@ -22,16 +40,41 @@ export default function AddProductsForm() {
   const handleProductPrice = (event) => {
     setProductInfo({ ...ProductInfo, ProductPrice: event.target.value });
   };
-  const handleImage = (event) => {};
-  const handleAddPostSumbit = (event) => {
-    event.preventDefault();
-    console.log(ProductInfo);
+  const handleChange = (image) => {
+    const Images = [...image];
+
+    const convertedImages = [];
+
+    for (let i = 0; i < Images.length; i++) {
+      const reader = new FileReader();
+      reader.readAsDataURL(Images[i]);
+      reader.onload = () => {
+        convertedImages.push(reader.result);
+        if (convertedImages.length === Images.length) {
+          setImage(convertedImages);
+          setProductInfo({ ...ProductInfo, Images: convertedImages });
+          setImageName(Images);
+        }
+      };
+      console.log(convertedImages);
+      console.log(Images);
+    }
+  };
+
+  const handleImageRemove = (index) => {
+    const Images = [...image];
+    Images.splice(index, 1);
+    setImage(Images);
+    setProductInfo({ ...ProductInfo, Images: Images });
+    const name = [...imageName];
+    name.splice(index, 1);
+    setImageName(name);
   };
   return (
     <>
       <div className="add-product-section">
         <div className="Add-post-Header">Add Product Page</div>
-        <form className="product-form" onSubmit={handleAddPostSumbit}>
+        <form className="product-form" onSubmit={handleProductSubmit}>
           <input
             className="data-input"
             placeholder="AnimalType"
@@ -52,25 +95,34 @@ export default function AddProductsForm() {
             placeholder="ProductPrice"
             onChange={handleProductPrice}
           />
-          <input
-            className="data-input"
+          <FileUploader
+            classes="image-uploader"
             placeholder="Image-upload"
-            onChange={handleImage}
-            id="I2"
+            handleChange={handleChange}
+            multiple
+            children={
+              <div className="image-content-holder">
+                <div className="image-label">Please Upload an Image ..</div>
+                <div className="image-logo"></div>
+              </div>
+            }
           />
           <button type="submit" className="add-product-btn">
             Add Product
           </button>
         </form>
+
         <div className="product-images">
-          <div className="image">
-            ImagePath
-            <div className="remove-image"></div>
-          </div>
-          <div className="image">
-            ImagePath
-            <div className="remove-image"></div>
-          </div>
+          {imageName.map((ele, index) => (
+            <div className="image" key={index}>
+              <div className="image-src-name"> {ele.name}</div>
+
+              <div
+                className="remove-image"
+                onClick={() => handleImageRemove(index)}
+              ></div>
+            </div>
+          ))}
         </div>
       </div>
     </>

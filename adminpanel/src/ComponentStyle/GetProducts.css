@@ -1,0 +1,57 @@
+.get-products-holder {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 2rem;
+}
+.get-product-header {
+  position: relative;
+  top: 0;
+  left: 45%;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  padding-bottom: 1rem;
+}
+.static-products-data {
+  width: 100%;
+  height: 3rem;
+  background-color: #ea738d;
+  display: flex;
+  justify-content: space-around;
+  font-size: 20px;
+  align-items: center;
+}
+.products-data {
+  width: 100%;
+  height: 3rem;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: space-around;
+  font-size: 23px;
+  align-items: center;
+  color: black;
+  border-bottom: 2px solid brown;
+}
+
+.animal-type-product,
+.product-type,
+.product-name,
+.product-price {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.remove-product {
+  width: 3rem;
+  height: 3rem;
+  background-image: url("../Image/deleteLogoTest.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}

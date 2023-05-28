@@ -15,7 +15,6 @@ export default function AddInformationBlog() {
   ]);
 
   const HandleAddBlogForm = async (e) => {
-    e.preventDefault();
     UploadeData();
   };
 

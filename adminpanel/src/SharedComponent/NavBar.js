@@ -1,17 +1,19 @@
 import React from "react";
 import "../SharedComponetStyle/NavBar.css";
 import { Link } from "react-router-dom";
-export default function AddCatagory() {
+export default function NavBar() {
   return (
     <div className="NavBar-Holder">
       <ul className="Catagory">
         <li className="dropdown">
           <a>Products</a>
           <div class="dropdown-content">
-            <a>Link 1</a>
-
-            <a>Link 2</a>
-            <a>Link 3</a>
+            <Link to={"/AddProduct"}>
+              <a>Add Product</a>
+            </Link>
+            <Link to={"/GetProduct"}>
+              <a>Get Products</a>
+            </Link>
           </div>
         </li>
         <li class="dropdown">
@@ -21,9 +23,8 @@ export default function AddCatagory() {
               <a>Add InformationBlog</a>
             </Link>
             <Link to={"/GetBlog"}>
-              <a>GetBlogsInformation</a>
+              <a>Get InformationBlogs</a>
             </Link>
-            <a>Link 3</a>
           </div>
         </li>
       </ul>
