@@ -2,7 +2,7 @@ import AddBlog from "../Pages/AddBlog";
 import AddProduct from "../Pages/AddProduct";
 import GetBlog from "../Pages/GetBlog";
 import GetProduct from "../Pages/GetProduct";
-
+import AddType from "../Pages/AddType";
 const routes = [
   {
     path: "/AddProduct",
@@ -19,6 +19,10 @@ const routes = [
   {
     path: "/GetBlog",
     element: <GetBlog />,
+  },
+  {
+    path: "/AddType",
+    element: <AddType />,
   },
 ];
 export default routes;

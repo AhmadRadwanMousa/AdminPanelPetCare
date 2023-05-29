@@ -56,8 +56,6 @@ export default function AddProductsForm() {
           setImageName(Images);
         }
       };
-      console.log(convertedImages);
-      console.log(Images);
     }
   };
 
