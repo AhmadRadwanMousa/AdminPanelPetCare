@@ -5,10 +5,8 @@ import CatagoryHolder from "../SharedComponent/CatagoryHolder";
 export default function GetProduct() {
   return (
     <>
-      <NavBar></NavBar>
-      <CatagoryHolder>
-        <GetProducts />
-      </CatagoryHolder>
+      <NavBar />
+      <GetProducts />
     </>
   );
 }

@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from "react";
 import "../ComponentStyle/AddInfromationBlog.css";
+import api from "../api/api";
 export default function AddInformationBlog() {
   const [image, setImage] = useState([]);
   const [ImageName, setImageName] = useState([]);
+  const [Types, setTypes] = useState([]);
   const [blogdata, setblogdata] = useState([
     {
-      AnimalType: " ",
-      AnimalBreed: " ",
+      AnimalType: "",
+      AnimalBreed: "",
       Longitude: "",
       Latitude: "",
-      Description: " ",
+      Description: "",
       Images: [],
     },
   ]);
-
+  const getTypes = async () => {
+    const response = await api.get("/admin/getTypes", {});
+    const json = await response.data;
+    setTypes(json.allModelsData[0]);
+  };
+  useEffect(() => {
+    getTypes();
+  }, []);
   const HandleAddBlogForm = async (e) => {
     UploadeData();
   };
-
   const UploadeData = async () => {
     const response = await fetch("http://localhost:4111/admin/getBlogData", {
       method: "POST",
@@ -32,7 +40,6 @@ export default function AddInformationBlog() {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
   };
-
   const handleImageChange = (e) => {
     const Images = Array.from(e.target.files);
     const convertedImages = [];
@@ -50,7 +57,6 @@ export default function AddInformationBlog() {
       };
     }
   };
-
   const handleDeleteImage = (index, event) => {
     const imgs = [...image];
     imgs.splice(index, 1);
@@ -60,7 +66,6 @@ export default function AddInformationBlog() {
     updatedImageNames.splice(index, 1);
     setImageName(updatedImageNames);
   };
-
   const handleAnimalType = (e) => {
     setblogdata({ ...blogdata, AnimalType: e.target.value });
   };
@@ -80,11 +85,16 @@ export default function AddInformationBlog() {
   return (
     <div className="information-blog-holder">
       <form className="add-blog-form" onSubmit={HandleAddBlogForm}>
-        <input
+        <select
           className="info-input"
           placeholder="AnimalType"
           onChange={handleAnimalType}
-        />
+        >
+          <option>Select Animal Type</option>
+          {Types.map((ele) => (
+            <option>{ele.TypeName}</option>
+          ))}
+        </select>
         <input
           className="info-input"
           placeholder="AnimalBreed"

@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import "../ComponentStyle/GetBlogInformaiton.css";
 import { useEffect } from "react";
 import NoData from "../SharedComponent/NoData";
+import DataTable from "../SharedComponent/DataTable";
 
 export default function GetBlogInformation() {
   const [blogdata, setblogdata] = useState([]);
+  const [index, setIndex] = useState();
+  const headerContent = ["BlogID", "AnimalType", "AnimalBreed", "remove"];
 
   useEffect(() => {
     GetBlogs();
-  }, []);
+  }, [index]);
   const handleDeleteClick = (index) => {
+    setIndex(index);
     const ID = blogdata[index]._id;
     DeleteBlogs(ID);
-    const CopyData = [...blogdata];
-    CopyData.splice(index, 1);
-    setblogdata(CopyData);
   };
   const GetBlogs = async () => {
     const response = await fetch("http://localhost:4111/admin/getBlogRecords", {
@@ -43,27 +44,16 @@ export default function GetBlogInformation() {
   };
 
   return (
-    <div className="blogs-table">
-      <div className="blog-table-header">GetBlog Information</div>
+    <>
       {blogdata.length === 0 ? (
         <NoData />
       ) : (
-        <div className="blog-data-header">
-          <div>AnimalType</div>
-          <div>AnimalBreed</div>
-          <div>Remove</div>
-        </div>
+        <DataTable
+          headerContent={headerContent}
+          bodyData={blogdata}
+          handleDeleteClick={handleDeleteClick}
+        />
       )}
-      {blogdata.map((data, index) => (
-        <div className="blog-data" key={index}>
-          <div className="animal-type">{data.animalType}</div>
-          <div className="animal-breed">{data.animalBreed}</div>
-          <div
-            className="delete-blog"
-            onClick={() => handleDeleteClick(index)}
-          ></div>
-        </div>
-      ))}
-    </div>
+    </>
   );
 }

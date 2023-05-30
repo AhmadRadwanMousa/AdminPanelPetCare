@@ -5,10 +5,8 @@ import NavBar from "../SharedComponent/NavBar";
 export default function GetBlog() {
   return (
     <>
-      <NavBar></NavBar>
-      <CatagoryHolder>
-        <GetBlogInformation />
-      </CatagoryHolder>
+      <NavBar />
+      <GetBlogInformation />
     </>
   );
 }
