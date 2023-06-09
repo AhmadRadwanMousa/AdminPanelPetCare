@@ -54,3 +54,7 @@ li.dropdown {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+.log-out{
+  color: white;
+  cursor: pointer;
+}

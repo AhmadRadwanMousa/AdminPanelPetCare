@@ -48,7 +48,8 @@ export default function DataTable(props) {
                         </>
                       }
                     </>
-                  ) : (
+                  ): headerContent.length===5?
+                   (
                     <>
                       <td className="body-data">{data.animalType}</td>
                       <td className="body-data">{data.productType}</td>
@@ -62,8 +63,18 @@ export default function DataTable(props) {
                           }}
                         ></div>
                       </td>
+
                     </>
-                  )}
+                   ):
+                   <>
+                   {/* <td className="body-data">{data._id}</td>
+                   <td className="body-data">{data.email}</td>
+                   <td className="body-data">{data.} </td>
+                   <td className="body-data">{data._d}</td>
+                   <td className="body-data">{data._d}</td>
+                   <td className="body-data">{data._d}</td> */}
+                   </>
+                   }
                 </tr>
               ))}
             </tbody>

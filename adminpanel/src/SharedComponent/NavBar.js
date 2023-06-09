@@ -1,11 +1,15 @@
 import React from "react";
 import "../SharedComponetStyle/NavBar.css";
 import { Link } from "react-router-dom";
+import { useAuth } from "../Auth/useAuth";
 export default function NavBar() {
+  const handleDeleteToken = ()=>{
+  localStorage.removeItem("token");
+  window.location.href = "/" ;
+  }
   return (
     <div className="NavBar-Holder">
       <ul className="Catagory">
-        <div>Hello {}</div>
         <li className="dropdown">
           <a>Products</a>
           <div class="dropdown-content">
@@ -36,9 +40,8 @@ export default function NavBar() {
             <a>Orders</a>
           </Link>
         </li>
-        <Link to={"/Login"}>
-          <div>Log out</div>
-        </Link>
+          <div className="log-out" onClick={handleDeleteToken}>Log out</div>
+       
       </ul>
     </div>
   );
