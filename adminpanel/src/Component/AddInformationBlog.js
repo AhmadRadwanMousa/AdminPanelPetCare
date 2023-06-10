@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../ComponentStyle/AddInfromationBlog.css";
 import api from "../api/api";
+import { FileUploader } from "react-drag-drop-files";
+import "animate.css";
 export default function AddInformationBlog() {
   const [image, setImage] = useState([]);
   const [ImageName, setImageName] = useState([]);
+  const [dataPresent, setDataPresent] = useState(image.length > 0);
   const [Types, setTypes] = useState([]);
   const [blogdata, setblogdata] = useState([
     {
@@ -15,6 +18,9 @@ export default function AddInformationBlog() {
       Images: [],
     },
   ]);
+  useEffect(() => {
+    setDataPresent(image.length > 0);
+  }, [image]);
   const getTypes = async () => {
     const response = await api.get("/admin/getTypes", {});
     const json = await response.data;
@@ -40,19 +46,19 @@ export default function AddInformationBlog() {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
   };
-  const handleImageChange = (e) => {
-    const Images = Array.from(e.target.files);
+  const handleChange = (img) => {
+    const image = [...img];
     const convertedImages = [];
-
-    for (let i = 0; i < Images.length; i++) {
+    console.log(image);
+    for (let i = 0; i < image.length; i++) {
       const reader = new FileReader();
-      reader.readAsDataURL(Images[i]);
+      reader.readAsDataURL(image[i]);
       reader.onload = () => {
         convertedImages.push(reader.result);
-        if (convertedImages.length === Images.length) {
+        if (convertedImages.length === image.length) {
           setImage(convertedImages);
           setblogdata({ ...blogdata, Images: convertedImages });
-          setImageName(Images);
+          setImageName(image);
         }
       };
     }
@@ -66,6 +72,7 @@ export default function AddInformationBlog() {
     updatedImageNames.splice(index, 1);
     setImageName(updatedImageNames);
   };
+  console.log(image);
   const handleAnimalType = (e) => {
     setblogdata({ ...blogdata, AnimalType: e.target.value });
   };
@@ -88,9 +95,11 @@ export default function AddInformationBlog() {
         <select
           className="info-input"
           placeholder="AnimalType"
-          onChange={handleAnimalType}
-        >
-          <option>Select Animal Type</option>
+          onChange={handleAnimalType}>
+          required
+          <option disabled selected>
+            Select Animal Type
+          </option>
           {Types.map((ele) => (
             <option>{ele.TypeName}</option>
           ))}
@@ -99,45 +108,55 @@ export default function AddInformationBlog() {
           className="info-input"
           placeholder="AnimalBreed"
           onChange={handleAnimalBreed}
+          required
         />
         <input
           className="info-input"
           placeholder="Longitude"
           onChange={handleLongitude}
+          required
         />
         <input
           className="info-input"
           placeholder="Latitude"
           onChange={handleLatitude}
+          required
         />
         <textarea
           className="info-input"
           placeholder="Description"
           id="t1"
           onChange={handleDescription}
+          required
         />
-
-        <input
-          className="Info-image"
-          placeholder="Image"
-          type={"file"}
+        <FileUploader
+          classes="image-uploader"
+          placeholder="Image-upload"
+          handleChange={handleChange}
           multiple
-          onChange={handleImageChange}
+          required
+          children={
+            <div className="image-content-holder" id="t2">
+              <div className="image-label">Please Upload an Image ..</div>
+              <div className="image-logo"></div>
+            </div>
+          }
         />
 
         <button className="add-blog-btn" type="submit">
           Add Blog
         </button>
       </form>
-
-      <div className="blog-image-holder">
+      <div
+        className={`animate__animated ${
+          dataPresent ? "animate__fadeInLeft" : "animate__fadeOutLeft"
+        } blog-image-holder`}>
         {ImageName.map((img, index) => (
           <div className="selected-images" key={index}>
             <div className="image-src-name"> {img.name}</div>
             <div
               className="remove-blog-image"
-              onClick={() => handleDeleteImage(index)}
-            ></div>
+              onClick={() => handleDeleteImage(index)}></div>
           </div>
         ))}
       </div>

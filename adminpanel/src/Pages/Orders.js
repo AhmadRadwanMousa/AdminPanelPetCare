@@ -9,9 +9,9 @@ export default function Orders() {
   const getOrders = async ()=>{
 const response =await api.get ("/admin/getOrders",{});
 const json = await response.data ;
-setLoading(false);
 console.log (json);
-setOrders (json.Orders);
+setOrders (json);
+setLoading(false);
 
   }
   useEffect (()=>{

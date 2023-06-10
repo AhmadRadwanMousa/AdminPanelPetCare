@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../ComponentStyle/AddProductForm.css";
 import { FileUploader } from "react-drag-drop-files";
+import api from "../api/api";
+
 export default function AddProductsForm() {
   const [image, setImage] = useState([]);
   const [imageName, setImageName] = useState([]);
+  const [Type, setTypes] = useState([]);
+  const [dataPresent, setDataPresent] = useState(image.length > 0);
   const [ProductInfo, setProductInfo] = useState([
     {
       AnimalType: "",
@@ -13,20 +17,26 @@ export default function AddProductsForm() {
       Images: [],
     },
   ]);
+  useEffect(() => {
+    setDataPresent(image.length > 0);
+  }, [image]);
+  const getTypes = async () => {
+    const response = await api.get("/admin/getTypes", {});
+    const json = await response.data;
+    setTypes(json.allModelsData[0]);
+  };
+  useEffect(() => {
+    getTypes();
+  }, []);
+  console.log(Type);
   const handleProductSubmit = async (event) => {
     await UploadData();
   };
   const UploadData = async () => {
-    const response = await fetch("http://localhost:4111/admin/getProductData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ProductData: ProductInfo }),
+    const response = await api.post("/admin/getProductData", {
+      ProductData: ProductInfo,
     });
-    console.log(ProductInfo);
-    const data = await response.json();
-    console.log(data.message);
+    const json = await response.data;
   };
   const handleAnimalType = (event) => {
     setProductInfo({ ...ProductInfo, AnimalType: event.target.value });
@@ -73,25 +83,40 @@ export default function AddProductsForm() {
       <div className="add-product-section">
         <div className="Add-post-Header">Add Product Page</div>
         <form className="product-form" onSubmit={handleProductSubmit}>
-          <input
+          <select
             className="data-input"
             placeholder="AnimalType"
-            onChange={handleAnimalType}
-          />
+            onChange={handleAnimalType}>
+            required
+            <option selected disabled>
+              Select Animal Type
+            </option>
+            {Type.map((type) => (
+              <option>{type.TypeName}</option>
+            ))}
+          </select>
+          <select
+            className="data-input"
+            placeholder="ProductType"
+            required
+            onChange={handleProductType}>
+            <option selected disabled>
+              Select Product Type
+            </option>
+            <option>Food</option>
+            <option>Accessories</option>
+          </select>
           <input
             className="data-input"
             placeholder="ProductName"
             onChange={handleProductName}
-          />
-          <input
-            className="data-input"
-            placeholder="ProductType"
-            onChange={handleProductType}
+            required
           />
           <input
             className="data-input"
             placeholder="ProductPrice"
             onChange={handleProductPrice}
+            required
           />
           <FileUploader
             classes="image-uploader"
@@ -110,15 +135,17 @@ export default function AddProductsForm() {
           </button>
         </form>
 
-        <div className="product-images">
+        <div
+          className={`animate__animated ${
+            dataPresent ? "animate__fadeInLeft" : "animate__fadeOutLeft"
+          } product-images`}>
           {imageName.map((ele, index) => (
             <div className="image" key={index}>
               <div className="image-src-name"> {ele.name}</div>
 
               <div
                 className="remove-image"
-                onClick={() => handleImageRemove(index)}
-              ></div>
+                onClick={() => handleImageRemove(index)}></div>
             </div>
           ))}
         </div>

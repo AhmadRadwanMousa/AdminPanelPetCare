@@ -1,36 +1,32 @@
 import React, { useState } from "react";
 import "../ComponentStyle/AddAnimalTypeForm.css";
 import { FileUploader } from "react-drag-drop-files";
+import api from "../api/api";
 export default function AddAnimalTypeForm() {
   const [animalTypeData, setAnimalTypeData] = useState({
     animalType: "",
     Image: [],
   });
-  const handleAnimalTypeApi = async () => {
-    const response = await fetch("http://localhost:4111/admin/getAnimalType", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        animalTypeInformaion: animalTypeData,
-      }),
-    });
-    const json = await response.json();
-    console.log(json.message);
-  };
   const [Imagerfc, setImagerfc] = useState("");
   const handleDeleteImage = () => {
     setImagerfc("");
     setAnimalTypeData({ animalTypeData, Image: null });
   };
+  const handleAnimalTypeApi = async () => {
+    const response = await api.post("admin/getAnimalType", {
+      animalTypeInformaion: animalTypeData,
+    });
+    const json = await response.data;
+    console.log(json);
+  };
+
   const handleChange = (image) => {
     let convertedImages = [];
     const reader = new FileReader();
     reader.readAsDataURL(image);
     reader.onload = () => {
       convertedImages[0] = reader.result;
+      console.log(convertedImages);
       setAnimalTypeData({ ...animalTypeData, Image: convertedImages });
       setImagerfc(image.name);
     };
@@ -45,8 +41,7 @@ export default function AddAnimalTypeForm() {
           className="animal-type-name"
           type={"text"}
           placeholder={"AnimalType"}
-          onChange={handleTypeName}
-        ></input>
+          onChange={handleTypeName}></input>
         <FileUploader
           classes="image-uploader"
           placeholder="Image-upload"
@@ -61,8 +56,7 @@ export default function AddAnimalTypeForm() {
         <button
           className="add-type-btn"
           type="submit"
-          onClick={handleAnimalTypeApi}
-        >
+          onClick={handleAnimalTypeApi}>
           Add Type
         </button>
       </form>
@@ -77,8 +71,7 @@ export default function AddAnimalTypeForm() {
             <div className="image-rfc-label">{Imagerfc}</div>
             <div
               className="image-rfc-delete-logo"
-              onClick={handleDeleteImage}
-            ></div>
+              onClick={handleDeleteImage}></div>
           </div>
         )}
       </div>

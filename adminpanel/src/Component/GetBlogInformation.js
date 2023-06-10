@@ -3,46 +3,27 @@ import "../ComponentStyle/GetBlogInformaiton.css";
 import { useEffect } from "react";
 import NoData from "../SharedComponent/NoData";
 import DataTable from "../SharedComponent/DataTable";
-
+import api from "../api/api";
 export default function GetBlogInformation() {
   const [blogdata, setblogdata] = useState([]);
   const [index, setIndex] = useState();
   const headerContent = ["BlogID", "AnimalType", "AnimalBreed", "remove"];
-
   useEffect(() => {
     GetBlogs();
   }, [index]);
-  const handleDeleteClick = (index) => {
+  const handleDeleteClick = async (index) => {
     setIndex(index);
-    const ID = blogdata[index]._id;
-    DeleteBlogs(ID);
+    const blogId = blogdata[index]._id;
+    const response = await api.delete("/admin/deleteBlogRecord", {
+      data: { BlogId: blogId },
+    });
+    const json = await response.data;
   };
   const GetBlogs = async () => {
-    const response = await fetch("http://localhost:4111/admin/getBlogRecords", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await response.json();
-    setblogdata(data);
+    const response = await api.get("/admin/getBlogRecords", {});
+    const json = await response.data;
+    setblogdata(json);
   };
-  const DeleteBlogs = async (ID) => {
-    const response = await fetch(
-      "http://localhost:4111/admin/deleteBlogRecord",
-      {
-        method: "DELETE",
-        body: JSON.stringify({ id: ID }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const res = await response.json();
-    console.log(res);
-  };
-
   return (
     <>
       {blogdata.length === 0 ? (
