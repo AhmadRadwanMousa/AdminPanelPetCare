@@ -14,10 +14,12 @@ td {
 }
 .table-holder {
   width: 80%;
-  height: 40rem;
   position: relative;
+  max-height: 80rem;
+  padding-top: 3rem;
   left: 50%;
   transform: translate(-50%, 10%);
+  overflow: auto;
 }
 table {
   border-collapse: separate;
@@ -54,7 +56,10 @@ table {
   max-width: 16rem;
   padding: 1rem;
 }
-
+.remove-logo-div-holder {
+  display: flex;
+  justify-content: center;
+}
 .remove-logo-image {
   width: 4rem;
   height: 4rem;
@@ -62,8 +67,6 @@ table {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  text-align: center;
-  margin-left: 9rem;
 }
 .select-order-state {
   width: 15rem;
