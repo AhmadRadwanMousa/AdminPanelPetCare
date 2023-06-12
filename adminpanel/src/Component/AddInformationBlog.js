@@ -148,9 +148,8 @@ export default function AddInformationBlog() {
         </button>
       </form>
       <div
-        className={`animate__animated ${
-          dataPresent ? "animate__fadeInLeft" : "animate__fadeOutLeft"
-        } blog-image-holder`}>
+        className="
+         blog-image-holder">
         {ImageName.map((img, index) => (
           <div className="selected-images" key={index}>
             <div className="image-src-name"> {img.name}</div>
